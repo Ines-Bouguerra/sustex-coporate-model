@@ -1,0 +1,170 @@
+[
+    {
+        "id": 1,
+        "I want to (perform some task)": "Assess the conformity of specific action or choices",
+        "So that I can (achieve some goals)": "Return a conformity check report based on the description of the action/choice and regulations (SEC, EU, National)",
+        "My tasks": "IA Outcomes",
+        "IA Outcomes": "The model return a conformity check report"
+    },
+    {
+        "id": 2,
+        "I want to (perform some task)": "Access a Dashboard from the ESG pillars or the 17 SDGs",
+        "So that I can (achieve some goals)": "Follow historical performances of the organization under each pillar",
+        "My tasks": "I load firm data or use the data managed by SovereignPiAlpha",
+        "IA Outcomes": "The dashboard provides visualizations by pillar and indicators, returns a performance score against the sample and the benchmark, and provides a report describing likely improvements"
+    },
+    {
+        "id": 3,
+        "I want to (perform some task)": "Select and aggregate data between Pillars or indicators",
+        "So that I can (achieve some goals)": "Make a comparative assessment of performances between Pillars and indicators",
+        "My tasks": "I load firm data or use the data managed by SovereignPialpha",
+        "IA Outcomes": "The model provides correlation analysis report and suggests improvements for related activities"
+    },
+    {
+        "id": 4,
+        "I want to (perform some task)": "Create an aggregate synthesis between Pillars and indicators in a specific time frame",
+        "So that I can (achieve some goals)": "Track performances across indicators and Pillars",
+        "My tasks": "IA Outcomes",
+        "IA Outcomes": "The model generates a score against a benchmark and provides a report"
+    },
+    {
+        "id": 5,
+        "I want to (perform some task)": "Track performances across indicators and Pillars in real-time",
+        "So that I can (achieve some goals)": "Have real-time tracking of indicators",
+        "My tasks": "I load Firm’s Reports or interact with the ChatbOT",
+        "IA Outcomes": "The model generates a score against a benchmark and provides a report based on actual data"
+    },
+    {
+        "id": 6,
+        "I want to (perform some task)": "Describe the health of the ESG system",
+        "So that I can (achieve some goals)": "Know how the organization stands regarding ESG",
+        "My tasks": "I load Firm’s Reports or interact with the ChatbOT",
+        "IA Outcomes": "The model generate a complete ESG report based on the 13 pillars"
+    },
+    {
+        "id": 7,
+        "I want to (perform some task)": "Create external comparison",
+        "So that I can (achieve some goals)": "Compare organization’s performances against peers",
+        "My tasks": "I select pertinent indicators and compare them with other entities data",
+        "IA Outcomes": "The IA loads and parses company ESG reports, evaluates the performances in each section and indicators, identifies potential anomalies or missing information, and returns a comparative score and a report"
+    },
+    {
+        "id": 8,
+        "I want to (perform some task)": "Generate a prescriptive assessment",
+        "So that I can (achieve some goals)": "Know how the organization’s ESG system can improve",
+        "My tasks": "I load firm data or use the data managed by SovereignPialpha",
+        "IA Outcomes": "The model uses DEA and generates a prescriptive report with recommendations"
+    },
+    {
+        "id": 9,
+        "I want to (perform some task)": "Generate a scenario analysis",
+        "So that I can (achieve some goals)": "Know organization’s trajectory under various SSP",
+        "My tasks": "I interact with the ChatbOt",
+        "IA Outcomes": "The model generates a report describing the trajectory of the organization under the scenarios"
+    },
+    {
+        "id": 10,
+        "I want to (perform some task)": "Generate a predictive assessment",
+        "So that I can (achieve some goals)": "Predict likely evolutions",
+        "My tasks": "I interact with the ChatbOt",
+        "IA Outcomes": "The model generates a predictive report and recommendations"
+    },
+    {
+        "id": 11,
+        "I want to (perform some task)": "Create visual representations of physical assets",
+        "So that I can (achieve some goals)": "Visualize in real time the state of the assets and their exposure to ESG risks",
+        "My tasks": "I load GPS data, generate a localization on a map and then interact with the chatbOt",
+        "IA Outcomes": "The model generates a report localizing the assets and their level of exposure to climate risks (heat, flooding, snow, sea-level rise, fire)"
+    },
+    {
+        "id": 12,
+        "I want to (perform some task)": "Create a hierarchy of natural and climate risks which can hinder the organization",
+        "So that I can (achieve some goals)": "Prepare an ESG risk-assessment report",
+        "My tasks": "From visual representations and scenario analysis I interact with the chatBot",
+        "IA Outcomes": "The model generates a report classifying the risks and their likelihood Assessing how the organization interacts with ecosystems"
+    },
+    {
+        "id": 13,
+        "I want to (perform some task)": "Prepare an ecosystem interaction check",
+        "So that I can (achieve some goals)": "Assessing the state of social performances by indicator",
+        "My tasks": "From visual representation, GPS data, biodiversity map (in France carte des parcs naturels), and local communities, I interact with the chatbOt",
+        "IA Outcomes": "The model generates a report describing likely or real risks on human and natural ecosystems"
+    },
+    {
+        "id": 14,
+        "I want to (perform some task)": "Generate an ESG firm valuation and appreciation/deprecation depending on risk",
+        "So that I can (achieve some goals)": "Translate ESG data into the financial valuation of the firm",
+        "My tasks": "The model focus on the “E” pillar, aggregate the data and generate a value",
+        "IA Outcomes": "The model provides a report on the actual added value (based on the algorithm), and the depreciation based on the risk"
+    },
+    {
+        "id": 15,
+        "I want to (perform some task)": "Assess the state of social performances by indicator",
+        "So that I can (achieve some goals)": "Tracking social indicators and getting recommendation",
+        "My tasks": "From the data, I interact with the chatBot",
+        "IA Outcomes": "The model generate a complete ESG report based on the social pillars= description, prescription, prediction"
+    },
+    {
+        "id": 16,
+        "I want to (perform some task)": "Assess the state of environmental performances by indicator",
+        "So that I can (achieve some goals)": "Tracking Environmental indicators and getting recommendation",
+        "My tasks": "From the data, I interact with the chatBot",
+        "IA Outcomes": "The model generate a complete ESG report based on the Environmental pillar = description, prescription, prediction"
+    },
+    {
+        "id": 17,
+        "I want to (perform some task)": "Assess the state of Governance performances by indicator",
+        "So that I can (achieve some goals)": "Tracking Governance indicators and getting recommendation",
+        "My tasks": "From the data, I interact with the chatBot",
+        "IA Outcomes": "The model generate a complete ESG report based on the Governance pillar = description, prescription, prediction"
+    },
+    {
+        "id": 18,
+        "I want to (perform some task)": "Create an instant Organization ESG snapshot",
+        "So that I can (achieve some goals)": "Having an instant look of all the organization performances",
+        "My tasks": "I interact with the chatbOt",
+        "IA Outcomes": "The model returns the dashboard with: Name of the Firm, Location, Place of Operation (ZIP Code), GPS Code, Historical value of each indicator (Real-time or quasi Real-time), Score (Real-time or quasi real-time), Rank (Real-time or quasi real-time), Trends (upward=green downward= red)"
+    },
+    {
+        "id": 19,
+        "I want to (perform some task)": "Performing complex calculations based on the data",
+        "So that I can (achieve some goals)": "Making personal calculations based on ML models",
+        "My tasks": "I interact with the ChatbOt",
+        "IA Outcomes": "The model generate calculations and results"
+    },
+    {
+        "id": 20,
+        "I want to (perform some task)": "Provide an ESG valuation of the firm based on sentiments",
+        "So that I can (achieve some goals)": "Knowing the impact of sentiments on firm value and operation",
+        "My tasks": "I interact with the ChatbOt",
+        "IA Outcomes": "The model generates a sentiment analysis report and showcases degrading/improving/increasing impact with a score"
+    },
+    {
+        "id": 21,
+        "I want to (perform some task)": "Preparing the ESG/SEC/CSRD annual Report",
+        "So that I can (achieve some goals)": "Having all the data and information streamlined for preparing the annual report",
+        "My tasks": "I load firm data or use the data managed by SovereignPiAlpha and interact with the ChatBot",
+        "IA Outcomes": "The model generates a complete ESG report based on the successive pillars and annual data"
+    },
+    {
+        "id": 22,
+        "I want to (perform some task)": "Perform an ESG due Diligence with the Regulation",
+        "So that I can (achieve some goals)": "Know where the Organization stands regarding its materiality and the Regulations",
+        "My tasks": "I load Firm’s Reports or interact with the ChatbOT",
+        "IA Outcomes": "The IA returns a report and a score emphasizing:\n- Long-term sustainability capital\n- Robust Sustainability Capital with corporates’s capability to produce long-term profits without sacrificing assets, skills, or resources through short-term exploitation\n- Increasing Sustainability Capital with efforts to produce and preserve assets, skills, and resources\n- Weak sustainability capital with risks on the preservation of corporate assets\n- Fragile Sustainability Capital\n- Perception of ESG criticallity:\n  - Strong perception\n  - Some sense of ESG with integration efforts\n  - Poor notion of ESG without any integration in the strategy and operations\n  - Absence of ESG Notions\n- Notion of Materiality:\n  - Strong perception of material risks\n  - Some notion of materiality with efforts to streamline a strategy\n  - Poor notion of materiality\n  - Absence of any materiality approach\n- ESG Data management:\n  - Robust ESG data management in place\n  - Internal ESG data management in place and self-monitored\n  - ESG data management under construction\n  - Absence of ESG data management"
+    },
+    {
+        "id": 23,
+        "I want to (perform some task)": "Perform an ESG Compliance check",
+        "So that I can (achieve some goals)": "Know if the Organization complies with SEC, EU, or national Regulation. Detect where it falls short",
+        "My tasks": "I load firm reports, incident reports, or interact with the chatBot",
+        "IA Outcomes": "The IA Loads and parses company ESG reports, checks for the presence of required sections, evaluates the completeness of information in each section, identifies potential anomalies or missing information. The IA returns a compliance score and a report:\n- Compliant: 100\n- Compliant with Reserves: 50\n- Non-Compliant with some efforts: 25\n- Non-Compliant: 0"
+    },
+    {
+        "id": 24,
+        "I want to (perform some task)": "Detect compliance risks in specific context",
+        "So that I can (achieve some goals)": "Check the materiality, detect the risks, and classify their likelihood",
+        "My tasks": "I load firm reports, incident reports, or interact with the chatBot",
+        "IA Outcomes": "The IA checks the materiality, detects the risks, and classifies their likelihood: High probability, Medium probability, Low probability, Very low probability"
+    }
+]

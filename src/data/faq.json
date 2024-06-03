@@ -1,0 +1,16 @@
+{
+    "faq": [
+        {
+            "question": "What is ESG?",
+            "answer": "ESG stands for Environmental, Social, and Governance. It is a set of criteria used to evaluate a company's performance in these areas."
+        },
+        {
+            "question": "Why is ESG important?",
+            "answer": "ESG factors are important because they can have a significant impact on a company's long-term financial performance and reputation."
+        },
+        {
+            "question": "How can companies improve their ESG performance?",
+            "answer": "Companies can improve their ESG performance by implementing sustainable practices, promoting diversity and inclusion, and enhancing corporate governance."
+        }
+    ]
+}
