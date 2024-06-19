@@ -50,8 +50,8 @@ const BarChart = ({ isDashboard = false, pillars }) => {
                     },
                 },
             }}
-            keys={["e_score", "s_score", "g_score", "score_sentiment"]}
-            indexBy="factors"
+            keys={["e_score", "s_score", "g_score"]}
+            indexBy="category"
             margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
             padding={0.3}
             valueScale={{ type: "linear" }}
@@ -62,7 +62,7 @@ const BarChart = ({ isDashboard = false, pillars }) => {
                     id: "dots",
                     type: "patternDots",
                     background: "inherit",
-                    color: "#38bcb2",
+                    color: "#b7ebde",
                     size: 4,
                     padding: 1,
                     stagger: true,
@@ -71,7 +71,7 @@ const BarChart = ({ isDashboard = false, pillars }) => {
                     id: "lines",
                     type: "patternLines",
                     background: "inherit",
-                    color: "#eed312",
+                    color: "#f1b9b7",
                     rotation: -45,
                     lineWidth: 6,
                     spacing: 10,
@@ -87,7 +87,7 @@ const BarChart = ({ isDashboard = false, pillars }) => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: isDashboard ? undefined : "factors", // changed
+                legend: isDashboard ? undefined : "category", // changed
                 legendPosition: "middle",
                 legendOffset: 32,
                 tickValues: 0,
@@ -98,7 +98,7 @@ const BarChart = ({ isDashboard = false, pillars }) => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: isDashboard ? undefined : "factors", // changed
+                legend: isDashboard ? undefined : "category", // changed
                 legendPosition: "middle",
                 legendOffset: -40,
             }}
@@ -135,7 +135,7 @@ const BarChart = ({ isDashboard = false, pillars }) => {
             ]}
             role="application"
             barAriaLabel={function (e) {
-                return e.id + ": " + e.formattedValue + " in factors: " + e.indexValue;
+                return `${e.indexValue}: ${e.value}`;
             }}
         />
     );
