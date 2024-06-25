@@ -11,9 +11,9 @@ import FAQ from "./pages/faq";
 import NotFound from "./pages/notFound";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignupForm";
-import PrivateRoute from "./components/PrivateRoute";
 import { ColorModeContext, useMode } from "./theme";
-import { AuthProvider, useAuth } from "./context/AuthContext"; // Ensure this import statement is before its usage
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import Benchmarking from "./components/Benchmarking";
 
 function AppContent() {
   const [theme, colorMode] = useMode();
@@ -33,7 +33,8 @@ function AppContent() {
               <Route path="/auth/signin" element={<LoginForm />} />
               <Route path="/auth/signup" element={<SignUpForm />} />
               <Route path="/use-cases"  element={<UseCases />}  />
-              <Route path="/reports"  element={<Reports />}  />
+              <Route path="/reports" element={<Reports />} />
+              <Route path="/benchmarking" element={<Benchmarking />} />
               <Route path="/faq"  element={<FAQ />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

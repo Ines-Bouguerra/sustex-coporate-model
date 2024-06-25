@@ -10,6 +10,7 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 
 
 
@@ -123,6 +124,13 @@ const Sidebar = () => {
                             title="Reports"
                             to="/reports"
                             icon={<ReportOutlinedIcon />}
+                            selected={selected}
+                            setSelected={setSelected}
+                        />
+                        <Item
+                            title="Benchmarking"
+                            to="/benchmarking"
+                            icon={<AssessmentOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />

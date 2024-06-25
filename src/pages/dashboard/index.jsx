@@ -136,7 +136,7 @@ const Dashboard = () => {
                         setData(document_data);
                     }
                     socket.onclose = () => {
-                        setIsLoaded(false); // Set isLoaded to false when WebSocket connection is closed
+                        setIsLoaded(false);
                     }
                 }
             })
@@ -144,11 +144,6 @@ const Dashboard = () => {
                 console.error('Error uploading file: ', error);
             });
     };
-
-    useEffect(() => {
-        // show pillars data
-        console.log("pillars", pillars);
-    }, [pillars]);
 
     return (
         <Box m="20px">
