@@ -19,6 +19,14 @@ function getCookie(name) {
     return cookieValue;
 }
 
+const getCsrfToken = () => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; csrftoken=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+};
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.headers.common['X-CSRFToken'] = getCsrfToken();
 export async function login(email, password) {
     try {
         const response = await axios.post('http://127.0.0.1:8000/user/login/', { email, password });
@@ -30,6 +38,9 @@ export async function login(email, password) {
         // window.sessionStorage.setItem('token', csrfToken);
 
         toast.success('Logged in successfully!');
+        axios.defaults.headers.common['X-CSRFToken'] = getCsrfToken();
+        console.log(axios.defaults.headers.common['X-CSRFToken'])
+
         return response.data;
 
     } catch (error) {
