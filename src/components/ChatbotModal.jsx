@@ -1,32 +1,19 @@
 // ChatbotModal.js
 import React, { useState } from 'react';
 
-const ChatbotModal = ({ isOpen, onClose }) => {
-    const [messages, setMessages] = useState([
-        { role: 'assistant', body: 'Hello! How can I assist you today?', beingTyped: false },
-        { role: 'user', body: 'I have a question about my ESG score.', beingTyped: false }
-    ]);
-    const [newMessage, setNewMessage] = useState('');
+const ChatbotModal = ({ isOpen, onClose, messages, onSendMessage }) => {
+
     const [showTyping, setShowTyping] = useState(false);
+    const [input, setInput] = useState('');
 
-    const sendMessage = (e) => {
-        e.preventDefault();
-        if (!newMessage.trim()) return;
+    const handleSend = () => {
+        onSendMessage(input);
+        setInput('');
+    }
 
-        // Add user message to state
-        setMessages([...messages, { role: 'user', body: newMessage, beingTyped: false }]);
-        setNewMessage('');
-
-        // Simulate typing and response
-        setShowTyping(true);
-        setTimeout(() => {
-            setMessages(prevMessages => [
-                ...prevMessages,
-                { role: 'assistant', body: 'Here is the information you requested.', beingTyped: false }
-            ]);
-            setShowTyping(false);
-        }, 2000);
-    };
+    console.log(messages);
+    console.log(input);
+    
 
     return (
         <div className="chatbot-modal" style={{ display: isOpen ? 'block' : 'none' }}>
@@ -45,13 +32,14 @@ const ChatbotModal = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Input form */}
-                <form onSubmit={sendMessage} className="message-form">
+                <form onSubmit={handleSend} className="message-form">
                     <input
                         type="text"
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type your message..."
-                        className="message-input"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleSend();
+                        }}
                     />
                     <button type="submit" className="send-button">Send</button>
                 </form>

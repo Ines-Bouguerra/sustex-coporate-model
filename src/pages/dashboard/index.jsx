@@ -20,7 +20,7 @@ import BarChart2 from "../../components/BarChart2";
 import BarChart3 from "../../components/BarChart3";
 
 import StatBox from "../../components/StatBox";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import ProgressCircle from "../../components/ProgressCircle";
 import { format } from 'date-fns';
@@ -32,11 +32,9 @@ const Dashboard = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [file, setFile] = useState(null);
-
     const [environmentScore, setEnvironmentScore] = useState();
     const [socialScore, setSocialScore] = useState();
     const [governanceScore, setGovernanceScore] = useState();
-
     const [options] = useState({ labels: ['Score E', 'Score S', 'Score G'] });
     const [series, setSeries] = useState([
         { id: "Environment", color: colors.greenAccent[500], data: [] },
@@ -44,13 +42,12 @@ const Dashboard = () => {
         { id: "Governance", color: colors.redAccent[300], data: [] }
     ]);
     const [pillars, setPillars] = useState([]);
-
     const [esgData, setEsgData] = useState([]);
     const [data, setData] = useState({});
-
     const [isLoaded, setIsLoaded] = useState(false);
-
     const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+    const [messages, setMessages] = useState([]);
+    const socketRef = useRef(null);
 
     const handleFileChange = (e) => {
         const files = e.target.files;
@@ -59,90 +56,93 @@ const Dashboard = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
         formData.append('file', file);
-        axios.post('http://localhost:8000/esg/upload/', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(response => {
-                const fileUrl = response.data.path;
-                const socket = new WebSocket('ws://localhost:8000/ws/data/');
-                socket.onopen = () => {
-                    setIsLoaded(true);
-                    socket.send(JSON.stringify({
-                        type: 'form_data',
-                        data: {
-                            file_path: fileUrl
-                        }
-                    }));
-                    socket.onmessage = (event) => {
-                        const data = JSON.parse(event.data);
-                        const timestamp = new Date().toISOString();
-                        const document_data = data.document_data;
-                        const all_data_sentiment = data.all_data_sentiment;
-                        const formattedTimestamp = format(new Date(timestamp), 'dd, HH:mm:ss');
 
-                        if (document_data) {
-                            setEnvironmentScore(document_data.total_e_score);
-                            setSocialScore(document_data.total_s_score);
-                            setGovernanceScore(document_data.total_g_score);
-
-                            // Limit data points to MAX_DATA_POINTS
-                            const updateSeriesData = (seriesData, newPoint) => {
-                                const newData = [...seriesData, newPoint];
-                                return newData.length > MAX_DATA_POINTS ? newData.slice(newData.length - MAX_DATA_POINTS) : newData;
-                            };
-
-                            setSeries(prevSeries => [
-                                {
-                                    id: "Environment Score",
-                                    color: colors.greenAccent[500],
-                                    data: updateSeriesData(prevSeries[0].data, { x: formattedTimestamp, y: document_data.total_e_score })
-                                },
-                                {
-                                    id: "Social Score",
-                                    color: colors.blueAccent[400],
-                                    data: updateSeriesData(prevSeries[1].data, { x: formattedTimestamp, y: document_data.total_s_score })
-                                },
-                                {
-                                    id: "Governance Score",
-                                    color: colors.redAccent[300],
-                                    data: updateSeriesData(prevSeries[2].data, { x: formattedTimestamp, y: document_data.total_g_score })
-                                }
-                            ]);
-                            setEsgData([document_data.total_esg_score, document_data.year]);
-
-                            const transformedPillars = all_data_sentiment.map((item, index) => ({
-                                category: item.category,
-                                factors: item.factors,
-                                color: 'hsl(203, 70%, 50%)',
-                                e_score: item.e_score,
-                                e_color: 'hsl(203, 70%, 50%)',
-                                s_score: item.s_score,
-                                s_color: 'hsl(203, 70%, 50%)',
-                                g_score: item.g_score,
-                                g_color: 'hsl(203, 70%, 50%)',
-                                score_sentiment: item.score_sentiment,
-                                sentiment_color: 'hsl(203, 70%, 50%)',
-                                sentiment: item.sentiment,
-                            }));
-                            setPillars(transformedPillars);
-                        }
-                        setData(document_data);
-                    }
-                    socket.onclose = () => {
-                        setIsLoaded(false);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error uploading file: ', error);
+        try {
+            const response = await axios.post('http://localhost:8000/esg/upload/', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
+            const fileUrl = response.data.path;
+            const socket = new WebSocket('ws://localhost:8000/ws/data/');
+
+            socket.onopen = () => {
+                setIsLoaded(true);
+                socket.send(JSON.stringify({ type: 'form_data', data: { file_path: fileUrl } }));
+            };
+
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                const timestamp = new Date().toISOString();
+                const formattedTimestamp = format(new Date(timestamp), 'dd, HH:mm:ss');
+
+                if (data.document_data) {
+                    const { total_e_score, total_s_score, total_g_score, total_esg_score, year, campany_name, total_env_opportunity, total_soc_opportunity, total_gov_opportunity } = data.document_data;
+                    setEnvironmentScore(total_e_score);
+                    setSocialScore(total_s_score);
+                    setGovernanceScore(total_g_score);
+
+                    setSeries(prevSeries => [
+                        {
+                            ...prevSeries[0],
+                            data: [...prevSeries[0].data, { x: formattedTimestamp, y: total_e_score }].slice(-MAX_DATA_POINTS)
+                        },
+                        {
+                            ...prevSeries[1],
+                            data: [...prevSeries[1].data, { x: formattedTimestamp, y: total_s_score }].slice(-MAX_DATA_POINTS)
+                        },
+                        {
+                            ...prevSeries[2],
+                            data: [...prevSeries[2].data, { x: formattedTimestamp, y: total_g_score }].slice(-MAX_DATA_POINTS)
+                        }
+                    ]);
+
+                    setEsgData([total_esg_score, year]);
+
+                    const transformedPillars = data.all_data_sentiment.map(item => ({
+                        category: item.category,
+                        factors: item.factors,
+                        color: 'hsl(203, 70%, 50%)',
+                        e_score: item.e_score,
+                        s_score: item.s_score,
+                        g_score: item.g_score,
+                        score_sentiment: item.score_sentiment,
+                        sentiment: item.sentiment,
+                    }));
+                    setPillars(transformedPillars);
+
+                    setData({ total_e_score, total_s_score, total_g_score, total_esg_score, year, campany_name, total_env_opportunity, total_soc_opportunity, total_gov_opportunity });
+                }
+            };
+
+            socket.onclose = () => {
+                setIsLoaded(false);
+            };
+
+            socketRef.current = new WebSocket('ws://localhost:8000/ws/chatbot/');
+
+            socketRef.current.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                setMessages(prevMessages => [...prevMessages, { role: 'assistant', body: data.message }]);
+            };
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    };
+
+    const handleSendMessage = (message) => {
+        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+            const payload = {
+                campany_name: data.campany_name,
+                msg: message,
+                year: data.year,
+            };
+            socketRef.current.send(JSON.stringify(payload));
+            setMessages(prevMessages => [...prevMessages, { role: 'user', body: message }]);
+        }
     };
 
     return (
@@ -385,7 +385,7 @@ const Dashboard = () => {
                                         variant="h5"
                                         fontWeight="600"
                                     >
-                                        {data.company_name}
+                                        {data.campany_name}
                                     </Typography>
                                 </Box>
                                 <Box color={colors.grey[100]} variant="h5"
@@ -498,7 +498,8 @@ const Dashboard = () => {
                                 <ChatBubbleOutlineIcon sx={{ fontSize: "36px" }} />
                             </IconButton>
                         </Box>
-                        {isChatbotOpen && <ChatbotModal isOpen={isChatbotOpen} onClose={() => setIsChatbotOpen(false)} />}
+                        {isChatbotOpen && <ChatbotModal isOpen={isChatbotOpen} onClose={() => setIsChatbotOpen(false)} messages={messages}
+                            onSendMessage={handleSendMessage} />}
                 </>
             )}
         </Box>

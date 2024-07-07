@@ -18,7 +18,7 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             await login(email, password);
-            window.location.href = '/';
+            // window.location.href = '/';
         } catch (error) {
             console.error(error);
         }
