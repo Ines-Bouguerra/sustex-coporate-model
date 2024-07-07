@@ -6,13 +6,14 @@ const ChatbotModal = ({ isOpen, onClose, messages, onSendMessage }) => {
     const [showTyping, setShowTyping] = useState(false);
     const [input, setInput] = useState('');
 
-    const handleSend = () => {
+    const handleSend = (e) => {
+        e.preventDefault();
         onSendMessage(input);
         setInput('');
     }
 
-    console.log(messages);
-    console.log(input);
+    // console.log(messages);
+    // console.log(input);
     
 
     return (

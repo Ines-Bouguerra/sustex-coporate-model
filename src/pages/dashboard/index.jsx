@@ -56,6 +56,71 @@ const Dashboard = () => {
         }
     };
 
+    useEffect(() => {
+        // Initialize WebSocket connection
+        socketRef.current = new WebSocket('ws://localhost:8000/ws/data/');
+
+        socketRef.current.onopen = () => {
+            console.log('WebSocket connection established');
+        };
+
+        socketRef.current.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const timestamp = new Date().toISOString();
+            const formattedTimestamp = format(new Date(timestamp), 'dd, HH:mm:ss');
+
+            if (data.document_data) {
+                const { total_e_score, total_s_score, total_g_score, total_esg_score, year, campany_name, total_env_opportunity, total_soc_opportunity, total_gov_opportunity } = data.document_data;
+                setEnvironmentScore(total_e_score);
+                setSocialScore(total_s_score);
+                setGovernanceScore(total_g_score);
+
+                setSeries(prevSeries => [
+                    {
+                        ...prevSeries[0],
+                        data: [...prevSeries[0].data, { x: formattedTimestamp, y: total_e_score }].slice(-MAX_DATA_POINTS)
+                    },
+                    {
+                        ...prevSeries[1],
+                        data: [...prevSeries[1].data, { x: formattedTimestamp, y: total_s_score }].slice(-MAX_DATA_POINTS)
+                    },
+                    {
+                        ...prevSeries[2],
+                        data: [...prevSeries[2].data, { x: formattedTimestamp, y: total_g_score }].slice(-MAX_DATA_POINTS)
+                    }
+                ]);
+
+                setEsgData([total_esg_score, year]);
+
+                const transformedPillars = data.all_data_sentiment.map(item => ({
+                    category: item.category,
+                    factors: item.factors,
+                    color: 'hsl(203, 70%, 50%)',
+                    e_score: item.e_score,
+                    s_score: item.s_score,
+                    g_score: item.g_score,
+                    score_sentiment: item.score_sentiment,
+                    sentiment: item.sentiment,
+                }));
+                setPillars(transformedPillars);
+
+                setData({ total_e_score, total_s_score, total_g_score, total_esg_score, year, campany_name, total_env_opportunity, total_soc_opportunity, total_gov_opportunity });
+            } else if (data.message) {
+                setMessages(prevMessages => [...prevMessages, { role: 'assistant', body: data.message }]);
+            }
+        };
+
+        socketRef.current.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+
+        return () => {
+            if (socketRef.current) {
+                socketRef.current.close();
+            }
+        };
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -67,67 +132,9 @@ const Dashboard = () => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             const fileUrl = response.data.path;
-            const socket = new WebSocket('ws://localhost:8000/ws/data/');
 
-            socket.onopen = () => {
-                setIsLoaded(true);
-                socket.send(JSON.stringify({ type: 'form_data', data: { file_path: fileUrl } }));
-            };
-
-            socket.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                const timestamp = new Date().toISOString();
-                const formattedTimestamp = format(new Date(timestamp), 'dd, HH:mm:ss');
-
-                if (data.document_data) {
-                    const { total_e_score, total_s_score, total_g_score, total_esg_score, year, campany_name, total_env_opportunity, total_soc_opportunity, total_gov_opportunity } = data.document_data;
-                    setEnvironmentScore(total_e_score);
-                    setSocialScore(total_s_score);
-                    setGovernanceScore(total_g_score);
-
-                    setSeries(prevSeries => [
-                        {
-                            ...prevSeries[0],
-                            data: [...prevSeries[0].data, { x: formattedTimestamp, y: total_e_score }].slice(-MAX_DATA_POINTS)
-                        },
-                        {
-                            ...prevSeries[1],
-                            data: [...prevSeries[1].data, { x: formattedTimestamp, y: total_s_score }].slice(-MAX_DATA_POINTS)
-                        },
-                        {
-                            ...prevSeries[2],
-                            data: [...prevSeries[2].data, { x: formattedTimestamp, y: total_g_score }].slice(-MAX_DATA_POINTS)
-                        }
-                    ]);
-
-                    setEsgData([total_esg_score, year]);
-
-                    const transformedPillars = data.all_data_sentiment.map(item => ({
-                        category: item.category,
-                        factors: item.factors,
-                        color: 'hsl(203, 70%, 50%)',
-                        e_score: item.e_score,
-                        s_score: item.s_score,
-                        g_score: item.g_score,
-                        score_sentiment: item.score_sentiment,
-                        sentiment: item.sentiment,
-                    }));
-                    setPillars(transformedPillars);
-
-                    setData({ total_e_score, total_s_score, total_g_score, total_esg_score, year, campany_name, total_env_opportunity, total_soc_opportunity, total_gov_opportunity });
-                }
-            };
-
-            socket.onclose = () => {
-                setIsLoaded(false);
-            };
-
-            socketRef.current = new WebSocket('ws://localhost:8000/ws/chatbot/');
-
-            socketRef.current.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                setMessages(prevMessages => [...prevMessages, { role: 'assistant', body: data.message }]);
-            };
+            setIsLoaded(true);
+            socketRef.current.send(JSON.stringify({ type: 'form_data', data: { file_path: fileUrl } }));
         } catch (error) {
             console.error('Error uploading file:', error);
         }
@@ -135,12 +142,8 @@ const Dashboard = () => {
 
     const handleSendMessage = (message) => {
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-            const payload = {
-                campany_name: data.campany_name,
-                msg: message,
-                year: data.year,
-            };
-            socketRef.current.send(JSON.stringify(payload));
+            socketRef.current.send(JSON.stringify({ type: 'form_data', data: { msg: message } }));
+
             setMessages(prevMessages => [...prevMessages, { role: 'user', body: message }]);
         }
     };
