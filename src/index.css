@@ -353,7 +353,6 @@ body,
     background-color: #fff;
     padding: 20px;
     width: 400px;
-    max-width: 90%;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);    overflow-y: auto;
 
@@ -427,5 +426,6 @@ body,
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
+

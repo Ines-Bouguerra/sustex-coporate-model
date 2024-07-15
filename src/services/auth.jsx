@@ -9,7 +9,6 @@ function getCookie(name) {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -19,31 +18,21 @@ function getCookie(name) {
     return cookieValue;
 }
 
-const getCsrfToken = () => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; csrftoken=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-};
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.headers.common['X-CSRFToken'] = getCsrfToken();
+axios.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');
+
 export async function login(email, password) {
     try {
         const response = await axios.post('http://127.0.0.1:8000/user/login/', { email, password });
 
-        // Assume the CSRF token is in the response headers
-        const csrfToken = response.data.csrfToken;
-
-        // Set the CSRF token in the session storage for later use
-        // window.sessionStorage.setItem('token', csrfToken);
-
-        toast.success('Logged in successfully!');
-        axios.defaults.headers.common['X-CSRFToken'] = getCsrfToken();
-        console.log(axios.defaults.headers.common['X-CSRFToken'])
-
-        return response.data;
-
+        if (response.data.msg === "User logged in successfully!") {
+            sessionStorage.setItem('csrftoken', response.data.csrf_token);
+            toast.success('Logged in successfully!');
+            return response.data;
+        } else {
+            toast.error('Login failed!');
+        }
     } catch (error) {
+        console.error('Login error:', error);
         toast.error('Login failed!');
     }
 }
@@ -60,12 +49,13 @@ export async function signup(email, password, username) {
 
 export async function logout() {
     try {
-        await axios.post('http://127.0.0.1:8000/user/logout/');
+        await axios.post('http://127.0.0.1:8000/user/logout/', null, {
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        });
         toast.success('Logged out successfully!');
     } catch (error) {
         toast.error('Logout failed!');
     }
 }
-
-// Set up axios to include CSRF token from the start (if using Django's CSRF token cookie approach)
-axios.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');

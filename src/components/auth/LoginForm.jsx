@@ -7,21 +7,18 @@ import emailIcon from '../../assets/icons/email-icon.svg';
 import hidePasswordIcon from '../../assets/icons/hide-password-icon.svg';
 import showPasswordIcon from '../../assets/icons/show-password-icon.svg';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await login(email, password);
-            // window.location.href = '/';
-        } catch (error) {
-            console.error(error);
-        }
+        await login(email, password, navigate);
     };
 
     const togglePasswordVisibility = () => {

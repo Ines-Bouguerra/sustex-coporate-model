@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
@@ -11,7 +11,9 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
-
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined"; 
+import ScoreOutlinedIcon from "@mui/icons-material/ScoreOutlined";
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -106,13 +108,26 @@ const Sidebar = () => {
                     )}
 
                     <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+
                         <Item
                             title="Dashboard"
-                            to="/"
+                            to="/dashboard"
                             icon={<HomeOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
+                        <SubMenu title="Due Diligence" icon={<AssignmentOutlinedIcon />}>
+                            <MenuItem icon={<SecurityOutlinedIcon />}>
+                                <Link to="/due-diligence/sec-compliance">
+                                    SEC Compliance
+                                </Link>
+                            </MenuItem>
+                            <MenuItem icon={<ScoreOutlinedIcon />}>
+                                <Link to="/due-diligence/scoring">
+                                    Scoring
+                                </Link>
+                            </MenuItem>
+                        </SubMenu>
                         <Item
                             title="Use Cases"
                             to="/use-cases"

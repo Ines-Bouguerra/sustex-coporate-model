@@ -14,6 +14,11 @@ import SignUpForm from "./components/auth/SignupForm";
 import { ColorModeContext, useMode } from "./theme";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import Benchmarking from "./components/Benchmarking";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Settings from "./pages/settings";
+import SecCompliance from "./components/due-diligence/SecCompliance";
+import ScoreCompliance from "./components/due-diligence/ScoreCompliance";
+import Home from "./pages/Home";
 
 function AppContent() {
   const [theme, colorMode] = useMode();
@@ -29,13 +34,17 @@ function AppContent() {
           <main className="content">
             {isAuthenticated && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
-              <Route path="/"  element={<Dashboard />}  />
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
               <Route path="/auth/signin" element={<LoginForm />} />
               <Route path="/auth/signup" element={<SignUpForm />} />
-              <Route path="/use-cases"  element={<UseCases />}  />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/benchmarking" element={<Benchmarking />} />
-              <Route path="/faq"  element={<FAQ />} />
+              <Route path="/use-cases" element={<ProtectedRoute element={<UseCases />} />} />
+              <Route path="/reports" element={<ProtectedRoute element={<Reports />} />} />
+              <Route path="/benchmarking" element={<ProtectedRoute element={<Benchmarking />} />} />
+              <Route path="/due-diligence/sec-compliance" element={<ProtectedRoute element={<SecCompliance />} />} />
+              <Route path="/due-diligence/scoring" element={<ProtectedRoute element={<ScoreCompliance />} />} />
+              <Route path="/faq" element={<ProtectedRoute element={<FAQ />} />} />
+              <Route path="/settings" element={<ProtectedRoute element={<Settings />} />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             {isAuthenticated && <Footer />}

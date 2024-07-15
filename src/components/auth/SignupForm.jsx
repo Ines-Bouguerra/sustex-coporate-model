@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import emailIcon from '../../assets/icons/email-icon.svg';
 import hidePasswordIcon from '../../assets/icons/hide-password-icon.svg';
 import showPasswordIcon from '../../assets/icons/show-password-icon.svg';
@@ -19,7 +20,9 @@ const SignUpForm = () => {
         }
         try {
             const userData = await signup(email, password, userName);
-            console.log(userData);
+            if (userData) {
+                toast.success('Account created successfully!');
+            }
         } catch (error) {
             console.error(error);
         }

@@ -1,4 +1,3 @@
-// ChatbotModal.js
 import React, { useState } from 'react';
 
 const ChatbotModal = ({ isOpen, onClose, messages, onSendMessage }) => {
@@ -11,11 +10,7 @@ const ChatbotModal = ({ isOpen, onClose, messages, onSendMessage }) => {
         onSendMessage(input);
         setInput('');
     }
-
-    // console.log(messages);
-    // console.log(input);
     
-
     return (
         <div className="chatbot-modal" style={{ display: isOpen ? 'block' : 'none' }}>
             <div className="modal-content">
@@ -32,15 +27,15 @@ const ChatbotModal = ({ isOpen, onClose, messages, onSendMessage }) => {
                     {showTyping && <div className="message assistant">Typing...</div>}
                 </div>
 
-                {/* Input form */}
                 <form onSubmit={handleSend} className="message-form">
                     <input
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleSend();
+                            if (e.key === 'Enter') handleSend(e);
                         }}
+                        className="message-input"
                     />
                     <button type="submit" className="send-button">Send</button>
                 </form>

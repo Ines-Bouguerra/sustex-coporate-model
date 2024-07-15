@@ -5,24 +5,17 @@ import { tokens } from "../theme";
 const BarChart = ({ isDashboard = false, pillars }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+
     // Function to truncate the factor labels
     const truncateLabel = (label) => {
-        // Set the maximum length of the label
         const maxLength = 20;
-        // Check if the label exists and its length exceeds the maximum length
-        if (label?.length > maxLength) {
-            // Truncate the label and add ellipsis
-            return label.substring(0, maxLength - 3) + "...";
-        }
-        // Return the original label if it doesn't exist or doesn't exceed the maximum length
-        return label;
+        return label?.length > maxLength ? label.substring(0, maxLength - 3) + "..." : label;
     };
 
     return (
         <ResponsiveBar
             data={pillars}
             theme={{
-                // added
                 axis: {
                     domain: {
                         line: {
@@ -52,7 +45,7 @@ const BarChart = ({ isDashboard = false, pillars }) => {
             }}
             keys={["e_score", "s_score", "g_score", "score_sentiment"]}
             indexBy="factors"
-            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+            margin={{ top: 50, right: 160, bottom: 80, left: 80 }} // Increased margins
             padding={0.3}
             valueScale={{ type: "linear" }}
             indexScale={{ type: "band", round: true }}
@@ -86,12 +79,10 @@ const BarChart = ({ isDashboard = false, pillars }) => {
             axisBottom={{
                 tickSize: 5,
                 tickPadding: 5,
-                tickRotation: 0,
+                tickRotation: -45, // Incline les labels à 45 degrés
                 legend: isDashboard ? undefined : "factors", // changed
                 legendPosition: "middle",
-                legendOffset: 32,
-                tickValues: 0,
-                // Truncate the labels using the truncateLabel function
+                legendOffset: 50, // Adjusted legend offset
                 format: (tickValue) => truncateLabel(tickValue),
             }}
             axisLeft={{
@@ -100,7 +91,7 @@ const BarChart = ({ isDashboard = false, pillars }) => {
                 tickRotation: 0,
                 legend: isDashboard ? undefined : "factors", // changed
                 legendPosition: "middle",
-                legendOffset: -40,
+                legendOffset: -50, // Adjusted legend offset
             }}
             enableLabel={false}
             labelSkipWidth={12}

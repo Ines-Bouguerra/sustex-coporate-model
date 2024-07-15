@@ -57,7 +57,6 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        // Initialize WebSocket connection
         socketRef.current = new WebSocket('ws://localhost:8000/ws/data/');
 
         socketRef.current.onopen = () => {
@@ -108,10 +107,6 @@ const Dashboard = () => {
             } else if (data.message) {
                 setMessages(prevMessages => [...prevMessages, { role: 'assistant', body: data.message }]);
             }
-        };
-
-        socketRef.current.onclose = () => {
-            console.log('WebSocket connection closed');
         };
 
         return () => {
@@ -172,7 +167,10 @@ const Dashboard = () => {
                                 fontSize: "14px",
                                 fontWeight: "bold",
                                 padding: "10px 20px",
-                                mr: "10px"
+                                mr: "10px",
+                                '&:hover': {
+                                    backgroundColor: colors.blueAccent[500],
+                                },
                             }}
                         >
                             Select Report (PDF, CSV, XLSX)
@@ -187,7 +185,10 @@ const Dashboard = () => {
                             fontSize: "14px",
                             fontWeight: "bold",
                             padding: "10px 20px",
-                            mr: "10px"
+                            mr: "10px",
+                            '&:hover': {
+                                backgroundColor: colors.blueAccent[500],
+                            },
                         }}
                         onClick={handleSubmit}
                         disabled={!file}
@@ -196,6 +197,27 @@ const Dashboard = () => {
                     </Button>
                 </Box>
             </Box>
+            <Box
+                position="fixed"
+                bottom="20px"
+                right="20px"
+                zIndex="tooltip"
+            >
+                <IconButton
+                    sx={{
+                        backgroundColor: colors.blueAccent[500],
+                        color: colors.blueAccent[100],
+                        '&:hover': {
+                            backgroundColor: colors.blueAccent[600]
+                        }
+                    }}
+                    onClick={() => setIsChatbotOpen(!isChatbotOpen)} // Toggle the state
+                >
+                    <ChatBubbleOutlineIcon sx={{ fontSize: "36px" }} />
+                </IconButton>
+            </Box>
+            {isChatbotOpen && <ChatbotModal isOpen={isChatbotOpen} onClose={() => setIsChatbotOpen(false)} messages={messages}
+                onSendMessage={handleSendMessage} />}
             {!isLoaded ? (
                 <div className="text-center">
                     <Typography variant="h5" fontWeight="600" color={colors.grey[100]} mt="20px">
@@ -480,29 +502,7 @@ const Dashboard = () => {
                                 <BarChart3 isDashboard={true} pillars={pillars} />
                             </Box>
                         </Box>
-                    </Box>
-                    {/* Chatbot Icon */}
-                    <Box
-                        position="fixed"
-                        bottom="20px"
-                        right="20px"
-                        zIndex="tooltip"
-                    >
-                            <IconButton
-                                sx={{
-                                    backgroundColor: colors.primary[500],
-                                    color: colors.grey[100],
-                                    '&:hover': {
-                                        backgroundColor: colors.primary[600]
-                                    }
-                                }}
-                                onClick={() => setIsChatbotOpen(!isChatbotOpen)} // Toggle the state
-                            >
-                                <ChatBubbleOutlineIcon sx={{ fontSize: "36px" }} />
-                            </IconButton>
-                        </Box>
-                        {isChatbotOpen && <ChatbotModal isOpen={isChatbotOpen} onClose={() => setIsChatbotOpen(false)} messages={messages}
-                            onSendMessage={handleSendMessage} />}
+                    </Box>                   
                 </>
             )}
         </Box>
