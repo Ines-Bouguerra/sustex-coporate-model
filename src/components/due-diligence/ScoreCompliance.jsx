@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 import Header from '../Header';
 import axios from 'axios';
@@ -106,7 +106,28 @@ const ScoreCompliance = () => {
                     <Typography variant="h5" gutterBottom>
                         Compliance Results
                     </Typography>
-                    {/* Display your compliance results here */}
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Category</TableCell>
+                                    <TableCell align="center">Count</TableCell>
+                                    <TableCell align="center">Sentiment</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {Object.keys(complianceResults).map((key) => (
+                                    <TableRow key={key}>
+                                        <TableCell component="th" scope="row">
+                                            {key}
+                                        </TableCell>
+                                        <TableCell align="center">{complianceResults[key].count}</TableCell>
+                                        <TableCell align="center">{complianceResults[key].sentiment}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </Box>
             )}
         </Box>
