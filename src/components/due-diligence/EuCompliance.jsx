@@ -6,7 +6,7 @@ import { ResponsiveBar } from '@nivo/bar';
 import Header from '../Header';
 import { toast } from 'react-toastify';
 
-const SecCompliance = () => {
+const EuCompliance = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [file, setFile] = useState(null);
@@ -110,9 +110,9 @@ const SecCompliance = () => {
                     <Typography variant="h5" gutterBottom>
                         Compliance Results
                     </Typography>
-                    <div style={{ height: '400px', overflowX: 'scroll' }}>
+                    <div style={{ height: '400px' }}>
                         <ResponsiveBar
-                            data={complianceResults.slice(-20)}
+                            data={complianceResults}
                             theme={{
                                 axis: {
                                     domain: {
@@ -143,10 +143,9 @@ const SecCompliance = () => {
                             }}
                             keys={['value']} // Utilisation de 'value' comme clé pour les valeurs de conformité
                             indexBy="criterion"
-                            enableLabel={false}
-                            margin={{ top: 50, right: 160, bottom: 80, left: 80 }} // Increased margins
+                            margin={{ top: 50, right: 130, bottom: 90, left: 350 }}
                             padding={0.3}
-                            // layout="horizontal"
+                            layout="horizontal"
                             valueScale={{ type: 'linear' }}
                             indexScale={{ type: 'band', round: true }}
                             colors={{ scheme: 'set3' }}
@@ -200,7 +199,6 @@ const SecCompliance = () => {
                             animate={true}
                             motionStiffness={90}
                             motionDamping={15}
-                            barAriaLabel={e => `${e.id}: ${e.formattedValue} in country: ${e.indexValue}`}
                         />
                     </div>
                 </Box>
@@ -209,4 +207,4 @@ const SecCompliance = () => {
     );
 };
 
-export default SecCompliance;
+export default EuCompliance;

@@ -88,7 +88,7 @@ const BenchmarkingChart = () => {
     <Box m="20px">
       <Header title="Benchmarking Chart" subtitle="Compare two companies' scores for a specific year" />
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <FormControl sx={{ minWidth: 300 }}>
+        <FormControl sx={{ minWidth: 400 }}>
           <InputLabel id="company1-label" sx={{ color: colors.blueAccent[300] }}>
             Company 1
           </InputLabel>
@@ -109,7 +109,7 @@ const BenchmarkingChart = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl sx={{ minWidth: 300 }}>
+        <FormControl sx={{ minWidth: 400 }}>
           <InputLabel id="company2-label" sx={{ color: colors.blueAccent[300] }}>
             Company 2
           </InputLabel>

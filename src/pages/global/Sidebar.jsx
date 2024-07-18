@@ -118,8 +118,18 @@ const Sidebar = () => {
                         />
                         <SubMenu title="Due Diligence" icon={<AssignmentOutlinedIcon />}>
                             <MenuItem icon={<SecurityOutlinedIcon />}>
+                                <Link to="/due-diligence/french-compliance">
+                                    French - CSRD
+                                </Link>
+                            </MenuItem>
+                            <MenuItem icon={<SecurityOutlinedIcon />}>
+                                <Link to="/due-diligence/eu-compliance">
+                                    UE Regulation
+                                </Link>
+                            </MenuItem>
+                            <MenuItem icon={<SecurityOutlinedIcon />}>
                                 <Link to="/due-diligence/sec-compliance">
-                                    SEC Compliance
+                                    SEC
                                 </Link>
                             </MenuItem>
                             <MenuItem icon={<ScoreOutlinedIcon />}>

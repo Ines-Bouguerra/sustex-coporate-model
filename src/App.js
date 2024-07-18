@@ -19,6 +19,8 @@ import Settings from "./pages/settings";
 import SecCompliance from "./components/due-diligence/SecCompliance";
 import ScoreCompliance from "./components/due-diligence/ScoreCompliance";
 import Home from "./pages/Home";
+import EuCompliance from "./components/due-diligence/EuCompliance";
+import FrenchCompliance from "./components/due-diligence/FrenchCompliance";
 
 function AppContent() {
   const [theme, colorMode] = useMode();
@@ -41,6 +43,8 @@ function AppContent() {
               <Route path="/use-cases" element={<ProtectedRoute element={<UseCases />} />} />
               <Route path="/reports" element={<ProtectedRoute element={<Reports />} />} />
               <Route path="/benchmarking" element={<ProtectedRoute element={<Benchmarking />} />} />
+              <Route path="/due-diligence/fr-compliance" element={<ProtectedRoute element={<FrenchCompliance />} />} />
+              <Route path="/due-diligence/eu-compliance" element={<ProtectedRoute element={<EuCompliance />} />} />
               <Route path="/due-diligence/sec-compliance" element={<ProtectedRoute element={<SecCompliance />} />} />
               <Route path="/due-diligence/scoring" element={<ProtectedRoute element={<ScoreCompliance />} />} />
               <Route path="/faq" element={<ProtectedRoute element={<FAQ />} />} />
