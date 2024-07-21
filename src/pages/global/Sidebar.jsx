@@ -118,7 +118,7 @@ const Sidebar = () => {
                         />
                         <SubMenu title="Due Diligence" icon={<AssignmentOutlinedIcon />}>
                             <MenuItem icon={<SecurityOutlinedIcon />}>
-                                <Link to="/due-diligence/french-compliance">
+                                <Link to="/due-diligence/fr-compliance">
                                     French - CSRD
                                 </Link>
                             </MenuItem>
