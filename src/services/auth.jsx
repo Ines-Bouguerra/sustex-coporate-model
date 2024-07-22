@@ -21,7 +21,7 @@ function getCookie(name) {
 
 export async function login(email, password) {
     try {
-        const response = await axios.post('http://127.0.0.1:8000/user/login/', { email, password });
+        const response = await axios.post('http://152.228.133.62:8000/user/login/', { email, password });
 
         if (response.data.msg === "User logged in successfully!") {
             sessionStorage.setItem('csrftoken', response.data.csrf_token);
@@ -38,7 +38,7 @@ export async function login(email, password) {
 
 export async function signup(email, password, username) {
     try {
-        const response = await axios.post('http://127.0.0.1:8000/user/createUser', { email, password, username });
+        const response = await axios.post('http://152.228.133.62:8000/user/createUser', { email, password, username });
         toast.success('Account created successfully!');
         return response.data;
     } catch (error) {
@@ -48,7 +48,7 @@ export async function signup(email, password, username) {
 
 export async function logout() {
     try {
-        await axios.post('http://127.0.0.1:8000/user/logout/', null, {
+        await axios.post('http://152.228.133.62:8000/user/logout/', null, {
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
             }

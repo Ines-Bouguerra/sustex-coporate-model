@@ -124,7 +124,7 @@ const Dashboard = () => {
         formData.append('file', file);
 
         try {
-            const response = await axios.post('http://localhost:8000/esg/upload/', formData, {
+            const response = await axios.post('http://152.228.133.62:8000/esg/upload/', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             const fileUrl = response.data.path;

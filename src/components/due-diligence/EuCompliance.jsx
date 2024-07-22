@@ -28,7 +28,7 @@ const EuCompliance = () => {
         formData.append('file', file);
 
         try {
-            const response = await axios.post('http://localhost:8000/benchmarking/check_eu_compliance/', formData, {
+            const response = await axios.post('http://152.228.133.62:8000/benchmarking/check_eu_compliance/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

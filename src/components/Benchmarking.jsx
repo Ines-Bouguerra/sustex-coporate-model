@@ -15,7 +15,7 @@ const BenchmarkingChart = () => {
   const colors = tokens(theme.palette.mode);
 
   const fetchCompanies = useCallback(() => {
-    axios.get('http://localhost:8000/benchmarking/companies/')
+    axios.get('http://152.228.133.62:8000/benchmarking/companies/')
       .then(response => {
         setCompanies(response.data.companies);
       })
@@ -66,7 +66,7 @@ const BenchmarkingChart = () => {
       date: year,
     };
 
-    axios.post('http://localhost:8000/benchmarking/benchmark_campany/', params)
+    axios.post('http://152.228.133.62:8000/benchmarking/benchmark_campany/', params)
       .then(response => {
         const transformedData = transformBenchmarkingData(response.data);
         setBenchmarkingData(transformedData);

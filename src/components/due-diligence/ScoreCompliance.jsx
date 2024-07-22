@@ -28,7 +28,7 @@ const ScoreCompliance = () => {
         formData.append('file', file);
 
         try {
-            const response = await axios.post('http://localhost:8000/benchmarking/check_due_diligence/', formData, {
+            const response = await axios.post('http://152.228.133.62:8000/benchmarking/check_due_diligence/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
