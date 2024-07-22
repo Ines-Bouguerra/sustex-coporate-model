@@ -25,6 +25,7 @@ import axios from 'axios';
 import ProgressCircle from "../../components/ProgressCircle";
 import { format } from 'date-fns';
 import ChatbotModal from "../../components/ChatbotModal";
+import EnergyConsumptionChart from "../../components/EnergyConsumptionChart";
 
 const MAX_DATA_POINTS = 10;
 
@@ -142,6 +143,20 @@ const Dashboard = () => {
             setMessages(prevMessages => [...prevMessages, { role: 'user', body: message }]);
         }
     };
+
+    const datae = [
+        { name: 'Non-renewable source fuel consumption', value: 100000 },
+        { name: 'Renewable source fuel consumption', value: 50000 },
+        { name: 'Total electricity consumption', value: 200000 },
+        { name: 'Total heating consumption', value: 150000 },
+        { name: 'Total cooling consumption', value: 100000 },
+        { name: 'Total steam consumption', value: 50000 },
+        { name: 'Total electricity sold', value: -30000 },
+        { name: 'Total heating sold', value: -20000 },
+        { name: 'Total cooling sold', value: -15000 },
+        { name: 'Total steam sold', value: -10000 }
+    ];
+
 
     return (
         <Box m="20px">
@@ -439,7 +454,7 @@ const Dashboard = () => {
                             >
                                 Pillar Scores Over Time {data.year}
                             </Typography>
-                            <Box height="250px" mt="-20px">
+                            <Box height="250px" mt="">
                                 <BarChart isDashboard={true} pillars={pillars} />
                             </Box>
                         </Box>
@@ -449,6 +464,7 @@ const Dashboard = () => {
                             gridRow="span 2"
                             backgroundColor={colors.primary[400]}
                             p="30px"
+                            
                         >
                             <Typography variant="h5" fontWeight="600">
                                 Total ESG Score
@@ -501,7 +517,8 @@ const Dashboard = () => {
                             <Box height="250px" mt="-20px">
                                 <BarChart3 isDashboard={true} pillars={pillars} />
                             </Box>
-                        </Box>
+                            </Box>
+                            
                     </Box>                   
                 </>
             )}

@@ -18,7 +18,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-axios.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');
 
 export async function login(email, password) {
     try {

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ChatbotModal = ({ isOpen, onClose, messages, onSendMessage }) => {
-
     const [showTyping, setShowTyping] = useState(false);
     const [input, setInput] = useState('');
 
@@ -9,8 +8,25 @@ const ChatbotModal = ({ isOpen, onClose, messages, onSendMessage }) => {
         e.preventDefault();
         onSendMessage(input);
         setInput('');
-    }
-    
+        setShowTyping(false);
+    };
+
+    const handleInputChange = (e) => {
+        setInput(e.target.value);
+        setShowTyping(true);
+    };
+
+    // Optional: Automatically hide typing indicator after a few seconds of inactivity
+    useEffect(() => {
+        if (showTyping) {
+            const timer = setTimeout(() => {
+                setShowTyping(false);
+            }, 2000); // 2 seconds timeout
+
+            return () => clearTimeout(timer);
+        }
+    }, [showTyping]);
+
     return (
         <div className="chatbot-modal" style={{ display: isOpen ? 'block' : 'none' }}>
             <div className="modal-content">
@@ -31,7 +47,7 @@ const ChatbotModal = ({ isOpen, onClose, messages, onSendMessage }) => {
                     <input
                         type="text"
                         value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        onChange={handleInputChange}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') handleSend(e);
                         }}

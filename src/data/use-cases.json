@@ -1,13 +1,13 @@
 [
     {
-        "id": 1,
+        "id": "due-diligence/sec-compliance",
         "I want to (perform some task)": "Assess the conformity of specific action or choices",
         "So that I can (achieve some goals)": "Return a conformity check report based on the description of the action/choice and regulations (SEC, EU, National)",
         "My tasks": "IA Outcomes",
         "IA Outcomes": "The model return a conformity check report"
     },
     {
-        "id": 2,
+        "id": "dashboard",
         "I want to (perform some task)": "Access a Dashboard from the ESG pillars or the 17 SDGs",
         "So that I can (achieve some goals)": "Follow historical performances of the organization under each pillar",
         "My tasks": "I load firm data or use the data managed by SovereignPiAlpha",

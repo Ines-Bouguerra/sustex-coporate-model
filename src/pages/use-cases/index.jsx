@@ -35,7 +35,7 @@ const UseCases = () => {
                             <Typography variant="body1" color="text.secondary">
                                 {useCase["So that I can (achieve some goals)"]}
                             </Typography>
-                            <Link to={`/use-case/${useCase.id}`}>Learn More</Link>
+                            <Link to={`/${useCase.id}`}>Learn More</Link>
                         </CardContent>
                     </Card>
                 ))}

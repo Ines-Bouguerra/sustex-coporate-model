@@ -28,7 +28,7 @@ const FrenchCompliance = () => {
         formData.append('file', file);
 
         try {
-            const response = await axios.post('http://localhost:8000/benchmarking/check_compliance/', formData, {
+            const response = await axios.post('http://localhost:8000/benchmarking/check_fr_compliance/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -53,9 +53,9 @@ const FrenchCompliance = () => {
 
     return (
         <Box m="20px">
-            <Header title="SEC Compliance" subtitle="This section contains information and tools to ensure compliance with SEC regulations." />
+            <Header title="French regulations" subtitle="This section allows you to check compliance with French regulations (CSRD)" />
             <Typography variant="h5" gutterBottom>
-                Upload File to Check Compliance Sec
+                Upload a file to check compliance with French regulations (CSRD) 
             </Typography>
             <form onSubmit={handleSubmit}>
                 <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -110,9 +110,9 @@ const FrenchCompliance = () => {
                     <Typography variant="h5" gutterBottom>
                         Compliance Results
                     </Typography>
-                    <div style={{ height: '400px' }}>
+                    <div style={{ height: '400px', overflowX: 'scroll' }}>
                         <ResponsiveBar
-                            data={complianceResults}
+                            data={complianceResults.slice(-20)}
                             theme={{
                                 axis: {
                                     domain: {
@@ -143,9 +143,9 @@ const FrenchCompliance = () => {
                             }}
                             keys={['value']} // Utilisation de 'value' comme clé pour les valeurs de conformité
                             indexBy="criterion"
-                            margin={{ top: 50, right: 130, bottom: 90, left: 350 }}
+                            enableLabel={true}
+                            margin={{ top: 50, right: 160, bottom: 80, left: 80 }} // Increased margins
                             padding={0.3}
-                            layout="horizontal"
                             valueScale={{ type: 'linear' }}
                             indexScale={{ type: 'band', round: true }}
                             colors={{ scheme: 'set3' }}
@@ -199,6 +199,7 @@ const FrenchCompliance = () => {
                             animate={true}
                             motionStiffness={90}
                             motionDamping={15}
+                            barAriaLabel={e => `${e.id}: ${e.formattedValue} in country: ${e.indexValue}`}
                         />
                     </div>
                 </Box>
